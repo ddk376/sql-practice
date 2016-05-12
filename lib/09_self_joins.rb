@@ -160,7 +160,18 @@ def start_at_craiglockhart
   # by taking one bus, including 'Craiglockhart' itself. Include the stop name,
   # as well as the company and bus no. of the relevant service.
   execute(<<-SQL)
-    
+    SELECT DISTINCT
+      stopb.name, a.company, a.num
+    FROM
+      routes a
+    JOIN
+      routes b ON (a.company = b.company AND a.num = b.num)
+    JOIN
+      stops stopa ON (a.stop_id = stopa.id)
+    JOIN
+      stops stopb ON (b.stop_id = stopb.id)
+    WHERE
+      stopa.name = 'Craiglockhart'
   SQL
 end
 
@@ -169,5 +180,36 @@ def craiglockhart_to_sighthill
   # Sighthill. Show the bus no. and company for the first bus, the name of the
   # stop for the transfer, and the bus no. and company for the second bus.
   execute(<<-SQL)
+    SELECT
+      first_bus_route.num, first_bus_route.company,
+      first_bus_route.name,
+      second_bus_route.num, second_bus_route.company
+    FROM
+      (SELECT DISTINCT
+        a.num, a.company, stopb.id AS transfer, stopb.name AS name
+      FROM
+        routes a
+      JOIN
+        routes b ON (a.company = b.company AND a.num = b.num)
+      JOIN
+        stops stopa ON (a.stop_id = stopa.id)
+      JOIN
+        stops stopb ON (b.stop_id = stopb.id)
+      WHERE
+        stopa.name = 'Craiglockhart') AS first_bus_route
+    JOIN
+      (SELECT DISTINCT
+        a.stop_id, a.num, a.company
+      FROM
+        routes a
+      JOIN
+        routes b ON (a.company = b.company AND a.num = b.num)
+      JOIN
+        stops stopa ON (a.stop_id = stopa.id)
+      JOIN
+        stops stopb ON (b.stop_id = stopb.id)
+      WHERE
+        stopb.name = 'Sighthill') AS second_bus_route
+    ON first_bus_route.transfer = second_bus_route.stop_id
   SQL
 end
