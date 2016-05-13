@@ -17,8 +17,21 @@ def physics_no_chemistry
     SELECT DISTINCT
       yr
     FROM
-      (SELECT * FROM nobels WHERE subject = 'Physics') AS physics_nobel
+      (SELECT
+        *
+       FROM
+          nobels
+       WHERE
+          subject = 'Physics'
+       ) AS physics_nobel
     WHERE
-      yr NOT IN (SELECT yr FROM nobels WHERE subject = 'Chemistry');
+      yr NOT IN (
+        SELECT
+          yr
+        FROM
+          nobels
+        WHERE
+          subject = 'Chemistry'
+        );
   SQL
 end

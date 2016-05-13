@@ -17,7 +17,7 @@ def example_select
     FROM
       nobels
     WHERE
-      yr = 1960
+      yr = 1960;
   SQL
 end
 
@@ -49,7 +49,8 @@ def einstein_prize
   # Show the year and subject that won 'Albert Einstein' his prize.
   execute(<<-SQL)
     SELECT
-      yr, subject
+      yr,
+      subject
     FROM
       nobels
     WHERE
@@ -78,7 +79,8 @@ def eighties_literature
     FROM
       nobels
     WHERE
-      subject = 'Literature' AND yr BETWEEN 1980 AND 1989;
+      subject = 'Literature'
+      AND yr BETWEEN 1980 AND 1989;
   SQL
 end
 
@@ -91,7 +93,9 @@ def presidential_prizes
     FROM
       nobels
     WHERE
-      winner IN ('Theodore Roosevelt', 'Woodrow Wilson', 'Jimmy Carter');
+      winner IN ('Theodore Roosevelt',
+                  'Woodrow Wilson',
+                  'Jimmy Carter');
   SQL
 end
 

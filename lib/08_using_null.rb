@@ -20,9 +20,10 @@ def null_dept
   execute(<<-SQL)
     SELECT
       teachers.name
-    FROM teachers
+    FROM
+      teachers
     WHERE
-      dept_id IS NULL
+      dept_id IS NULL;
   SQL
 end
 
@@ -30,9 +31,11 @@ def all_teachers_join
   # List all teachers and their department, even if the department in NULL/nil.
   execute(<<-SQL)
     SELECT
-      teachers.name, depts.name
-    FROM teachers LEFT OUTER JOIN depts
-    ON teachers.dept_id = depts.id
+      teachers.name,
+      depts.name
+    FROM
+      teachers
+    LEFT OUTER JOIN depts ON teachers.dept_id = depts.id;
   SQL
 end
 
@@ -40,9 +43,12 @@ def all_depts_join
   # Use a different JOIN so that all departments are listed.
   execute(<<-SQL)
     SELECT
-      teachers.name, depts.name
-    FROM teachers RIGHT OUTER JOIN depts
-    ON teachers.dept_id = depts.id
+      teachers.name,
+      depts.name
+    FROM
+      teachers
+    RIGHT OUTER JOIN
+      depts ON teachers.dept_id = depts.id;
   SQL
 end
 
@@ -52,8 +58,9 @@ def teachers_and_mobiles
   # #number or '07986 444 2266'
   execute(<<-SQL)
     SELECT
-      teachers.name, COALESCE(teachers.mobile, '07986 444 2266')
-    FROM teachers
+      teachers.name,
+      COALESCE(teachers.mobile, '07986 444 2266')
+    FROM teachers;
   SQL
 end
 
@@ -63,13 +70,12 @@ def teachers_and_depts
   # department.
   execute(<<-SQL)
     SELECT
-      teachers.name, COALESCE(depts.name, 'None')
+      teachers.name,
+      COALESCE(depts.name, 'None')
     FROM
       teachers
     LEFT JOIN
-      depts
-    ON
-      teachers.dept_id = depts.id
+      depts ON teachers.dept_id = depts.id;
   SQL
 end
 
@@ -78,13 +84,17 @@ def num_teachers_and_mobiles
   # mobile phones.
   execute(<<-SQL)
     SELECT
-      SUM(T.teacher), SUM(mobile)
-    FROM
-      (SELECT
-        COUNT(teachers.id) AS teacher, COALESCE(COUNT(teachers.mobile), 0) AS mobile
+      SUM(T.teacher),
+      SUM(mobile)
+    FROM (
+      SELECT
+        COUNT(teachers.id) AS teacher,
+        COALESCE(COUNT(teachers.mobile), 0) AS mobile
       FROM
         teachers
-      GROUP BY teachers.id) AS T
+      GROUP BY
+        teachers.id
+      ) AS T;
   SQL
 end
 
@@ -94,15 +104,14 @@ def dept_staff_counts
   # Engineering department is listed.
   execute(<<-SQL)
     SELECT
-      depts.name, COALESCE(COUNT(teachers.dept_id), 0)
+      depts.name,
+      COALESCE(COUNT(teachers.dept_id), 0)
     FROM
       teachers
     RIGHT JOIN
-      depts
-    ON
-      teachers.dept_id = depts.id
+      depts ON teachers.dept_id = depts.id
     GROUP BY
-      depts.name
+      depts.name;
   SQL
 end
 
@@ -115,7 +124,7 @@ def teachers_and_divisions
       CASE WHEN teachers.dept_id=1 OR teachers.dept_id=2 THEN 'Sci'
            ELSE 'Art'
       END
-    FROM teachers
+    FROM teachers;
 
   SQL
 end
@@ -131,7 +140,8 @@ def teachers_and_divisions_two
            WHEN teachers.dept_id=3 THEN 'Art'
            ELSE 'None'
       END
-    FROM teachers
+    FROM
+      teachers;
 
   SQL
 end

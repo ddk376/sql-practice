@@ -17,7 +17,7 @@ def example_select
     FROM
       countries
     WHERE
-      name = 'France'
+      name = 'France';
   SQL
 end
 
@@ -66,11 +66,14 @@ def name_and_population
   # Show the name and population for 'France', 'Germany', and 'Italy'
   execute(<<-SQL)
      SELECT
-      name, population
+      name,
+      population
     FROM
       countries
     WHERE
-      name IN ('France', 'Germany', 'Italy');
+      name IN ('France',
+                'Germany',
+                'Italy');
   SQL
 end
 

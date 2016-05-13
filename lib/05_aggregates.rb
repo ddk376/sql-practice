@@ -15,7 +15,7 @@ def example_sum
     SELECT
       SUM(population)
     FROM
-      countries
+      countries;
   SQL
 end
 
@@ -73,7 +73,8 @@ def country_counts
   # For each continent show the continent and number of countries.
   execute(<<-SQL)
     SELECT
-      continent, COUNT(name) AS number_of_countries
+      continent,
+      COUNT(name) AS number_of_countries
     FROM
       countries
     GROUP BY
@@ -103,9 +104,13 @@ def populous_continents
        continent
      FROM
        (SELECT
-         continent , SUM(population) AS total_population
-        FROM countries
-        GROUP BY continent ) AS total_population_table
+         continent ,
+         SUM(population) AS total_population
+        FROM
+          countries
+        GROUP BY
+          continent
+        ) AS total_population_table
      WHERE
         total_population >= 100000000;
   SQL

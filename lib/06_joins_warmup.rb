@@ -108,14 +108,18 @@ def casablanca_cast
     FROM
       actors AS a
     JOIN
-      castings AS c
-    ON  a.id = c.actor_id
+      castings AS c ON  a.id = c.actor_id
     INNER JOIN
-      movies AS m
-    ON
-      m.id = c.movie_id
+      movies AS m ON m.id = c.movie_id
     WHERE
-      m.id = (SELECT id FROM movies WHERE title = 'Casablanca');
+      m.id = (
+        SELECT
+          id
+        FROM
+          movies
+        WHERE
+          title = 'Casablanca'
+        );
 
   SQL
 end
@@ -128,14 +132,18 @@ def alien_cast
     FROM
       actors AS a
     INNER JOIN
-      castings AS c
-    ON a.id = c.actor_id
+      castings AS c ON a.id = c.actor_id
     JOIN
-      movies AS m
-    ON
-      m.id = c.movie_id
+      movies AS m ON m.id = c.movie_id
     WHERE
-      m.id = (SELECT id FROM movies WHERE title = 'Alien')
+      m.id = (
+        SELECT
+          id
+        FROM
+          movies
+        WHERE
+          title = 'Alien'
+      );
 
   SQL
 end

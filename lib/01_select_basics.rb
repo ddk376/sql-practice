@@ -53,7 +53,8 @@ def small_and_wealthy
   # and the gdp is more than 5,000,000,000.
   execute(<<-SQL)
     SELECT
-      name, continent
+      name,
+      continent
     FROM
       countries
     WHERE
@@ -67,7 +68,8 @@ def scandinavia
   # 'Sweden'
   execute(<<-SQL)
     SELECT
-      name, population
+      name,
+      population
     FROM
       countries
     WHERE
@@ -95,7 +97,8 @@ def just_the_right_size
   # BETWEEN allows range checking - note that it is inclusive.
   execute(<<-SQL)
     SELECT
-      name, area/1000 AS area_in_thousands
+      name,
+      area/1000 AS area_in_thousands
     FROM
       countries
     WHERE
