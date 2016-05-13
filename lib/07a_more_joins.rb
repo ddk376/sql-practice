@@ -221,8 +221,6 @@ def expensive_tastes
   # Select the five styles of music with the highest average price per track,
   # along with the price per track. One or more of each aggregate functions,
   # subqueries, and joins will be required.
-  
-
   execute(<<-SQL)
     SELECT
       *

@@ -1,0 +1,26 @@
+SQL joins
+Suppose we have two tables Table A and Table B
+
+Inner Join - produces only the set of record that match in both Table A and Table B
+Full Outer Join - produces the set of all records in Table A and Table B, with matching records from both
+                  sides where available. If there is no match, the missing side will contain null
+Left Outer Join - produces a complete set of records from Table A, with the matching records (where available)
+                  in Table B. If there is no match, the right side will contain null.
+SELECT * FROM TableA
+LEFT OUTER JOIN TableB
+ON TableA.name = TableB.name
+
+To exclude records we don't want from the right side via a where clause
+SELECT * FROM TableA
+LEFT OUTER JOIN TableB
+ON TableA.name = TableB.name
+WHERE TableB.id IS null
+
+To exclude the records we don't want from both sides via a where clause
+SELECT * FROM TableA
+FULL OUTER JOIN TableB
+ON TableA.name = TableB.name
+WHERE TableA.id IS null
+OR TableB.id IS null
+
+Cross Join - Cartesian product

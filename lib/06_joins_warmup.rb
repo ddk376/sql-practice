@@ -110,7 +110,7 @@ def casablanca_cast
     JOIN
       castings AS c
     ON  a.id = c.actor_id
-    JOIN
+    INNER JOIN
       movies AS m
     ON
       m.id = c.movie_id
@@ -127,7 +127,7 @@ def alien_cast
       a.name
     FROM
       actors AS a
-    JOIN
+    INNER JOIN
       castings AS c
     ON a.id = c.actor_id
     JOIN
